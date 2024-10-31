@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="manifest" href="manifest.json">
+
+    <title>Document</title>
+
+    <script>
+        window.addEventListener('load', () => {
+            // Llamar a las funciones cuando la página está completamente cargada
+            registerSW(); // Registrar el Service Worker
+            //AgregarClickMostrar(); // Agregar el evento de clic al botón
+        });
+
+        // Función para registrar el Service Worker
+        async function registerSW() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    await navigator.serviceWorker.register('serviceworker.js');
+                    console.log('Service Worker registrado con éxito:');
+                } catch (error) {
+                    console.log('Fallo en el registro del Service Worker:', error);
+                }
+            }
+        };
+
+         // Escuchar el evento de instalación de la PWA
+         window.addEventListener('appinstalled', () => {
+            var ejemploprompt = document.querySelector(".ejemploprompt");
+            ejemploprompt.style.display = 'none'; // Ocultar el botón cuando la PWA esté instalada
+            console.log('La PWA se ha instalado correctamente');
+        });
+
+        var vPrompt;
+        window.addEventListener("beforeinstallprompt", function(e) {
+            e.preventDefault();
+            vPrompt = e;
+            console.log("beforeinstallprompt disparado"); // Agregar este log
+            AgregarClickMostrar(); // Llamar a la función para mostrar el botón
+        });
+
+        // Función para agregar el evento de clic al botón con clase "ejemploprompt"
+        function AgregarClickMostrar() {
+            var ejemploprompt = document.querySelector(".ejemploprompt");
+            if (ejemploprompt) { // Asegurarse de que el botón exista
+                ejemploprompt.style.display = 'block'; // Asegúrate de que sea visible
+                ejemploprompt.addEventListener("click", mostrarprompt); // Agregar el evento de clic
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <h1>Hola Mundo</h1>
+
+    <br>
+
+    <img src="img/logo.png" alt="">
+
+    <br>
+
+    <button type="button" class="ejemploprompt" name="btnEnviar" id="btnEnviar" style="background-color: azure; font-size: 14pt;">Instalar</button>
+</body>
+
+</html>

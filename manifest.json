@@ -1,0 +1,18 @@
+{
+    "scope": ".",
+    "name": "Copia PWA",
+    "short_name": "Copia de PWA",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4db6ac",
+    "description": "Aplicacion sobre left 4 dead",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "img/logo.png",
+            "type": "image/png",
+            "sizes": "32x32"
+        }
+    ]
+}
