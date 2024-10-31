@@ -13,7 +13,7 @@
         window.addEventListener('load', () => {
             // Llamar a las funciones cuando la página está completamente cargada
             registerSW(); // Registrar el Service Worker
-            //AgregarClickMostrar(); // Agregar el evento de clic al botón
+            AgregarClickMostrar(); // Agregar el evento de clic al botón
         });
 
         // Función para registrar el Service Worker
@@ -27,30 +27,6 @@
                 }
             }
         };
-
-         // Escuchar el evento de instalación de la PWA
-         window.addEventListener('appinstalled', () => {
-            var ejemploprompt = document.querySelector(".ejemploprompt");
-            ejemploprompt.style.display = 'none'; // Ocultar el botón cuando la PWA esté instalada
-            console.log('La PWA se ha instalado correctamente');
-        });
-
-        var vPrompt;
-        window.addEventListener("beforeinstallprompt", function(e) {
-            e.preventDefault();
-            vPrompt = e;
-            console.log("beforeinstallprompt disparado"); // Agregar este log
-            AgregarClickMostrar(); // Llamar a la función para mostrar el botón
-        });
-
-        // Función para agregar el evento de clic al botón con clase "ejemploprompt"
-        function AgregarClickMostrar() {
-            var ejemploprompt = document.querySelector(".ejemploprompt");
-            if (ejemploprompt) { // Asegurarse de que el botón exista
-                ejemploprompt.style.display = 'block'; // Asegúrate de que sea visible
-                ejemploprompt.addEventListener("click", mostrarprompt); // Agregar el evento de clic
-            }
-        }
     </script>
 
 </head>
@@ -64,7 +40,52 @@
 
     <br>
 
-    <button type="button" class="ejemploprompt" name="btnEnviar" id="btnEnviar" style="background-color: azure; font-size: 14pt;">Instalar</button>
+    <button type="button" class="ejemploprompt" name="btnEnviar" id="btnEnviar"
+        style="background-color: azure; font-size: 14pt;">Instalar</button>
 </body>
 
 </html>
+
+<script>
+
+    // Escuchar el evento de instalación de la PWA
+    window.addEventListener('appinstalled', () => {
+        var ejemploprompt = document.getElementById("btnEnviar");
+        ejemploprompt.style.display = 'none'; // Ocultar el botón cuando la PWA esté instalada
+        console.log('La PWA se ha instalado correctamente');
+    });
+
+    var vPrompt;
+    window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        vPrompt = e;
+        console.log('beforeinstallprompt'); // Agregar este log
+        AgregarClickMostrar(); // Llamar a la función para mostrar el botón
+    });
+
+    // Función para agregar el evento de clic al botón con clase "ejemploprompt"
+    function AgregarClickMostrar() {
+        var ejemploprompt = document.getElementById("btnEnviar");
+        console.log(ejemploprompt.style.display); // Ocultar el botón cuando
+        ejemploprompt.style.display = "block"; // Asegúrate de que sea visible
+        ejemploprompt.addEventListener("click", mostrarprompt); // Agregar el evento de clic
+
+    };
+
+    // Función que se ejecuta cuando se hace clic en el botón "Descargar"
+    function mostrarprompt() {
+        var ejemploprompt = document.getElementById("btnEnviar");
+        ejemploprompt.style.display = 'none'; // Ocultar el botón
+        
+        vPrompt.prompt(); // Mostrar el prompt de instalación
+
+        vPrompt.userChoice.then(function (choiceResult) {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('El usuario aceptó el prompt');
+            } else {
+                console.log('El usuario canceló el prompt');
+            }
+            vPrompt = null; // Limpiar el valor de vPrompt
+        });
+    };
+</script>
