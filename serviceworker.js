@@ -3,7 +3,8 @@ const currentCache = 'cache-v1.0';
 const files =
     [
         'img/logo.png',
-        'index.html'
+        'index.htm',
+        '/offline.html'
     ];
 
 
